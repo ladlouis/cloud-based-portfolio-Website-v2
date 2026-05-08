@@ -1,0 +1,488 @@
+:root {
+    --primary: #bc1bd3; /* Electric Magenta */
+    --accent: #4a0e4e;  /* Deep Purple */
+    --dark: #1a0b2e;    /* Brand Background */
+    --light: #f8fafc;
+}
+
+/* Slider Styling */
+.slider-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.slides-container {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hides scrollbar for clean look */
+}
+
+.slide {
+    width: calc(33.333% - 14px); /* 3 items per row */
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid var(--accent);
+    transition: 0.3s;
+}
+
+.slide img:hover { border-color: var(--primary); }
+
+/* Arrows */
+.slide-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* REMOVE STYLING: No background or border */
+    background: transparent;
+    border: none;
+    outline: none;
+    
+    /* STYLE THE ARROW: Use your brand purple */
+    color: var(--primary); 
+    font-size: 3rem; /* Make them large and easy to click */
+    font-weight: bold;
+    
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.6;
+    transition: 0.3s ease;
+    
+    /* Ensure no weird padding or shadows */
+    padding: 0;
+    box-shadow: none;
+}
+@media (max-width: 768px) {
+    .slide-arrow {
+        display: none; /* Mobile users prefer swiping over clicking arrows */
+    }
+}
+.slide-arrow:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2); /* Slight grow effect when hovering */
+    color: var(--light); /* Optional: Change color on hover for feedback */
+}
+
+/* Positioning them slightly off the edges for a "floating" feel */
+#slide-arrow-prev { left: 10px; }
+#slide-arrow-next { right: 10px; }
+
+/* Mobile View: 1 per row */
+@media (max-width: 768px) {
+    .slide { width: 100%; }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    line-height: 1.6;
+}
+
+.container {
+    padding: 80px 10%;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background: rgba(15, 23, 42, 0.9);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo { font-size: 1.5rem; font-weight: 700; }
+.logo span { color: var(--primary); }
+
+nav ul { display: flex; list-style: none; }
+nav ul li { margin-left: 20px; }
+nav ul li a { color: var(--light); text-decoration: none; font-size: 0.9rem; }
+
+/* Navigation Mobile Fix */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Stacks Logo above the links */
+        padding: 15px 5%;
+        gap: 10px;
+    }
+
+    nav ul {
+        padding: 0;
+        justify-content: center;
+        width: 100%;
+        gap: 15px; /* Adds space between menu items */
+    }
+
+    nav ul li {
+        margin: 0; /* Removes the left margin we used for desktop */
+    }
+}
+/* Hero Section */
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(to bottom, #1e293b, #0f172a);
+}
+
+.profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid var(--primary);
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.tagline { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+.bio { max-width: 600px; margin: 20px auto; color: var(--gray); }
+
+.btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+.hero {
+    background: linear-gradient(rgba(26, 11, 46, 0.85), rgba(26, 11, 46, 0.85)), 
+                url('backgrounds/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Creates a cool parallax effect */
+}
+/* 1. Define the Animations */
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 2. Apply to Hero Elements */
+.profile-img {
+    animation: fadeInScale 1.2s ease-out;
+}
+
+.hero h1 {
+    animation: slideInLeft 1s ease-out;
+}
+
+.tagline, .bio {
+    animation: slideInRight 1s ease-out;
+}
+
+.hero .btn {
+    animation: fadeInScale 1.5s ease-out;
+}
+/* Portfolio Section Background */
+#portfolio {
+    background: linear-gradient(rgba(26, 11, 46, 0.85), rgba(26, 11, 46, 0.85)), 
+                url('backgrounds/portfolio-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+/* Cards */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.card:hover { transform: translateY(-5px); border: 1px solid var(--primary); }
+.role { color: var(--primary); font-size: 0.8rem; margin-bottom: 10px; }
+
+/* Responsive Skills */
+.skills-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.skills-list span {
+    background: #334155;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+/* Color Palette Update */
+:root {
+    --primary: #bc1bd3; /* Electric Magenta */
+    --accent: #4a0e4e;  /* Deep Purple */
+    --bg-dark: #1a0b2e; /* Very Dark Purple */
+    --text-light: #f8fafc;
+}
+
+.about-container {
+    padding: 100px 10%;
+    background-color: var(--bg-dark);
+}
+
+.about-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    /* Increased the side padding to 12% and top/bottom to 80px */
+    padding: 80px 12%; 
+    background-color: var(--bg-dark);
+    border-top: 1px solid var(--accent);
+    /* This ensures content stays within the bounds */
+    box-sizing: border-box; 
+    overflow: hidden; 
+}
+.about-content {
+    display: flex;
+    /* STRETCH: This forces both the text and image containers to be equal height */
+    align-items: stretch; 
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+}
+.about-page {
+    background: linear-gradient(rgba(26, 11, 46, 0.9), rgba(26, 11, 46, 0.9)), 
+                url('backgrounds/about-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+@media (max-width: 900px) {
+    .about-page {
+        padding: 60px 8%; /* Adjusting side padding for mobile */
+    }
+
+    .about-content {
+        flex-direction: column-reverse; /* Keeps image at top, text below */
+        align-items: center; 
+        text-align: center; /* Centers the heading and overall block */
+    }
+
+    .about-text {
+        padding-right: 0; /* Removes the desktop padding */
+        width: 100%;
+        max-width: 500px; /* Prevents text from stretching too wide */
+        margin: 0 auto; /* Centers the whole text block on the screen */
+    }
+
+    .about-text p {
+        text-align: justify; /* The straight edges you requested */
+        text-justify: inter-word; /* Makes the justification look cleaner */
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .section-title {
+        text-align: center; /* Keeps the title centered above justified text */
+    }
+    
+    .section-title::after {
+        margin: 10px auto 0; /* Centers the accent line under the title */
+    }
+}
+/* LHS: Text Styling */
+.about-text {
+    flex: 1.2;
+    /* Adding a bit of internal padding to the right so it doesn't hit the image */
+    padding-right: 40px; 
+}
+
+.section-title {
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about-text p {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+/* RHS: Image Frame Styling */
+.about-image {
+    flex: 0.8;
+    display: flex;
+    /* This ensures the frame expands to the full height provided by the text */
+    flex-direction: column;
+}
+.image-frame {
+    /* Height 100% ensures it stays as tall as the text column next to it */
+    height: 100%; 
+    display: flex;
+}
+
+.image-frame:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(188, 27, 211, 0.3);
+}
+
+.image-frame img {
+    width: 100%;
+    /* OBJECT-FIT: This is the magic. It fills the height without distorting your photo */
+    height: 100%;
+    object-fit: cover; 
+    filter: grayscale(20%);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .about-content {
+        flex-direction: column-reverse; /* Puts image on top for mobile */
+        text-align: center;
+    }
+    
+    .image-frame {
+        width: 280px;
+        height: 350px;
+        margin-bottom: 30px;
+    }
+}
+footer {
+    width: 100%;
+    padding: 40px 0; /* Gives space above and below the text */
+    background-color: var(--bg-dark); /* Matches your brand background */
+    text-align: center; /* The magic line that centers the text */
+    border-top: 1px solid var(--accent); /* Optional: a thin line to separate it from the content above */
+}
+
+/* this is for the social media icons*/
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.social-icons img {
+    width: 30px; /* Adjust size as needed */
+    height: 30px;
+    filter: brightness(0) invert(1); /* This makes black icons turn white to match your dark theme */
+    transition: transform 0.3s ease, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.social-icons img:hover {
+    transform: translateY(-5px) scale(1.2); /* Bounces up slightly when hovered */
+    opacity: 1;
+}
+
+#contact { 
+    padding: 100px 10%;
+    text-align: center;
+    background-color: var(--bg-dark);
+}
+
+.contact-card {
+    background: linear-gradient(145deg, #2a114e, #1a0b2e);
+    padding: 60px 40px;
+    border-radius: 20px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.contact-details {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    text-decoration: none;
+    color: var(--light);
+    transition: 0.3s;
+}
+
+.contact-item:hover {
+    color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.contact-item .icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.contact-icon {
+    width: 40px; /* Adjust based on how large your icons are */
+    height: 40px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    /* This makes your icons match the white/magenta theme automatically */
+    filter: brightness(0) invert(1); 
+    transition: 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    transform: scale(1.1);
+    filter: none; /* Shows original color on hover if you prefer */
+}
+
+.contact-item p {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.whatsapp-btn {
+    background: #25d366; /* WhatsApp Green */
+    border: none;
+    font-weight: bold;
+}
+
+.whatsapp-btn:hover {
+    background: #128c7e;
+}
+
+@media (max-width: 768px) {
+    .contact-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+footer p {
+    color: var(--gray); /* Or #94a3b8 */
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .container { padding: 40px 5%; }
+}
